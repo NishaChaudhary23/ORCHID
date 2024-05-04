@@ -13,7 +13,7 @@ output_directory = '/home/microcrispr8/Documents/project-oralcancer/ORCHID-April
 if not os.path.exists(output_directory):
     os.makedirs(output_directory)
 
-def generate_and_save_patches(image_path, output_dir, patch_size=(512, 512), overlap=128):
+def generate_and_save_patches(image_path, output_dir, patch_size=(512, 512), overlap=256):
     with Image.open(image_path) as img:
         img_width, img_height = img.size
         
