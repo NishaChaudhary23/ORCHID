@@ -1,11 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Fri May  3 18:52:50 2024
-
-@author: microcrispr8
-"""
-
+#Testing model-1
 import os
 import numpy as np
 import pandas as pd
@@ -49,8 +42,11 @@ def evaluate_model(model_path, test_data_dir, output_dir, class_names):
     predictions = model.predict(test_generator)
     y_pred = np.argmax(predictions, axis=1)
     confusion_mtx = confusion_matrix(test_generator.classes, y_pred)
-    conf_df = pd.DataFrame(confusion_mtx, index=test_generator.class_indices.keys(), columns=test_generator.class_indices.keys())
+    # getting dataloader keys
+    conf_df = pd.DataFrame(confusion_mtx, index = list(test_generator.class_indices.keys()), columns = list(test_generator.class_indices.keys()))
     conf_df.to_csv(os.path.join(output_dir, 'Confusion_matrix.csv'))
+    
+    # plot cm
     cubehelix_cm = sns.color_palette("ch:s=-.2,r=.6", as_cmap=True)
     plt.figure(figsize=(8, 6))
     sns.heatmap(conf_df, annot=True, fmt='d', cmap=cubehelix_cm)
@@ -60,25 +56,42 @@ def evaluate_model(model_path, test_data_dir, output_dir, class_names):
     plt.xlabel('Predicted Label', fontsize=16, fontweight='bold', color='black')
     plt.ylabel('True Label', fontsize=16, fontweight='bold', color='black')
     plt.savefig(os.path.join(output_dir, 'Confusion_matrix.jpg'))
-
-    report = classification_report(test_generator.classes, y_pred, target_names=test_generator.class_indices.keys(), output_dict=True)
+    
+    # Computing and saving the Classification Report
+    # classification report
+    target_names = list(test_generator.class_indices.keys())
+    report = classification_report(test_generator.classes, y_pred, target_names=target_names, output_dict=True)
     df = pd.DataFrame(report).transpose()
-    df.to_csv(os.path.join(output_dir, 'Classification_report.csv'))
+    df.to_csv(os.path.join(output_dir,'Classification_report.csv'))
+    
+    # Saving predicted labels
+    predicted_labels = np.argmax(predictions, axis=1)
+    predicted_labels_df = pd.DataFrame({'Image': test_generator.filenames, 'Predicted Label': predicted_labels})
+    predicted_labels_df.to_csv(os.path.join(output_dir, 'Predicted_labels.csv'), index=False)
 
-    print("ROC and AUC calculations...")
-    fpr, tpr, roc_auc = dict(), dict(), dict()
-    plt.figure(figsize=(8, 6))
-    for i, class_name in enumerate(class_names):
-        fpr[i], tpr[i], _ = roc_curve(test_generator.classes == i, predictions[:, i])
+    # ROC curves
+    n_classes = len(class_names)  #  3 classes 
+    fpr = dict()
+    tpr = dict()
+    roc_auc = dict()
+    for i in range(n_classes):
+        y_true_i = test_generator.classes == i
+        y_score_i = predictions[:, i]
+        fpr[i], tpr[i], _ = roc_curve(y_true_i, y_score_i)
         roc_auc[i] = auc(fpr[i], tpr[i])
-        plt.plot(fpr[i], tpr[i], label=f'{class_name} (AUC={roc_auc[i]:.d})')
+
+    # Plot ROC curves
+    plt.figure(figsize=(8, 6))
+    for i in range(n_classes):
+        plt.plot(fpr[i], tpr[i], label=f'ROC Curve of {class_names[i]} (AUC = {roc_auc[i]:.2f})')
     plt.plot([0, 1], [0, 1], 'k--')
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    plt.title('ROC Curve', fontsize=20, fontweight='bold', color='black')
-    plt.legend(loc="lower right")
+    plt.xlabel('False Positive Rate (FPR)')
+    plt.ylabel('True Positive Rate (TPR)')
+    plt.title('ROC Curves', fontsize=20, fontweight='bold', color='black')
+    plt.legend(loc='lower right')
     plt.savefig(os.path.join(output_dir, 'ROC_Curve.jpg'))
     plt.close()
+
 
 if __name__ == "__main__":
     base_model_dir = '/media/microcrispr8/DATA 1/ORCHID-April24/model-1/models/InceptionV3'
