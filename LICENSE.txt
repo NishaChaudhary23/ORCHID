@@ -4,10 +4,10 @@ Terms of Use and License
 These terms and conditions (“Terms”) govern the use of the ORal Cancer Histology Image Database (ORCHID).
 
 2. License
-The Dataset is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0). This license grants Users the right to share, copy, and distribute the Dataset, provided that appropriate credit is given to the Dataset creators and that no derivative works are created.
+The Dataset is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0). This license grants Users the right to share, copy, distribute, and adapt the Dataset, provided that appropriate credit is given to the Dataset creators.
 
 3. Appropriate Use
-Users agree to use the Dataset solely for non-commercial purposes. The Dataset may not be used for any commercial purposes, including, but not limited to, selling, licensing, or distributing the Dataset or the development of commercial products, services, or technologies based on the Dataset.
+Users agree to use the Dataset in accordance with the terms of the CC BY 4.0 license. This includes providing proper attribution to the Dataset creators in any publication, presentation, or other work resulting from the use of the Dataset.
 
 4. Ownership
 The image data are manually annotated by JMI, MAIDS, BHU, RIMS, and AIIMS. The Dataset is the property of these participating hospitals and retains all rights, title, and interest in and to the Dataset, including all intellectual property rights. Users acknowledge and agree that they have no ownership or intellectual property rights in the Dataset, except as expressly provided in these Terms. Users agree not to reverse engineer, decompile, or disassemble the Dataset or attempt to derive the source code from the Dataset.
