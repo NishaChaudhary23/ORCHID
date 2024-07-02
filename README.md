@@ -33,4 +33,13 @@ You must place the entirety of the Data in a location on your machine storage an
 ```
 (Note: the data is supplied in as compressed tar files, they must be uncompressed before being placed in the above format.)
 
+## Licenses
+
+### Dataset License
+The dataset is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0). For more details, see the [LICENSE](LICENSE) file.
+
+### Source Code License
+The source code is licensed under the MIT License. For more details, see the [LICENSE_SOURCE_CODE](LICENSE_SOURCE_CODE) file.
+
+
 
