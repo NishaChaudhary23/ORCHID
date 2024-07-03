@@ -31,7 +31,7 @@ You must place the entirety of the Data in a location on your machine storage an
   |-mdoscc
   |-pdoscc
 ```
-(Note: the data is supplied in as compressed tar files, they must be uncompressed before being placed in the above format.)
+(Note: the data is supplied in as compressed zip files, they must be uncompressed before being placed in the above format.)
 
 ## Licenses
 
